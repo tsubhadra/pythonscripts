@@ -1,0 +1,25 @@
+import os
+
+# Function to process and extract the file name along with the directory path
+def extract_file_names(input_file, output_file, dir_path):
+    with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
+        # Read each line from the input file
+        for line in infile:
+            # Strip the date, time, and file size
+            parts = line.split(" ", 3)  # Splitting based on spaces (max 3 splits)
+            if len(parts) > 3:
+                # Get the file name part (after date, time, and file size)
+                file_name = parts[3].strip()  # File name is after the date, time, and size
+                # Construct the full path with directory
+                full_file_path = os.path.join(dir_path, file_name)
+                outfile.write(full_file_path + '\n')  # Write the full file path to the output file
+
+# Input and Output file paths
+input_file = 'list.txt'   # Assuming list.txt contains the entries
+output_file = 'list-out.txt' # The output file where we will save the extracted file names
+dir_path = r'C:\Users\John\files'  # Directory path to include in file names
+
+# Call the function to extract file names with directory path
+extract_file_names(input_file, output_file, dir_path)
+
+print(f"File names with directory paths have been extracted and saved in {output_file}.")
